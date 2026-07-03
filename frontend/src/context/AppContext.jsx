@@ -25,7 +25,7 @@ export const AppProvider = ({ children }) => {
     setRefreshTrigger(prev => prev + 1);
   }, []);
 
-  const setAuth = (newRole, newFactoryId, newUserProfile) => {
+  const setAuth = (newRole, newFactoryId, newUserProfile, token) => {
     setToken(true);
     setRole(newRole);
     setFactoryId(newFactoryId);
@@ -35,6 +35,8 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem("role", newRole);
     if (newFactoryId) localStorage.setItem("factoryId", newFactoryId);
     else localStorage.removeItem("factoryId");
+    
+    if (token) localStorage.setItem("token", token);
   };
 
   useEffect(() => {
@@ -79,11 +81,20 @@ export const AppProvider = ({ children }) => {
     };
   }, [userProfile, factoryId, triggerDataRefresh]);
 
-  const apiFetch = useCallback(async (endpoint, options = {}) => {
+  const apiFetch = useCallback(async (endpoint, options = {}, isProtected = true) => {
     const headers = { 'Content-Type': 'application/json', ...options.headers };
-    options.credentials = 'include';
+    if (isProtected) {
+      options.credentials = 'include';
+    }
     
-    const res = await fetch(`${BACKEND_URL}${endpoint}`, { ...options, headers });
+    const token = localStorage.getItem("token");
+    if (token) {
+      options.headers = { ...headers, Authorization: `Bearer ${token}` };
+    } else {
+      options.headers = headers;
+    }
+    
+    const res = await fetch(`${BACKEND_URL}${endpoint}`, { ...options });
     if (res.status === 401) { logout(); throw new Error("Session invalid."); }
     return res.json();
   }, [logout]);

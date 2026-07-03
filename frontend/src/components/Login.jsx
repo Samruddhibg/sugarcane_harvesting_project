@@ -24,7 +24,7 @@ export const Login = () => {
       if (data.error) {
         toast.error(data.error);
       } else {
-        setAuth(data.role, data.factoryId, data.userProfile);
+        setAuth(data.role, data.factoryId, data.userProfile, data.token);
         toast.success("successfully logined");
         
         if (data.role === 'farmer') navigate('/home/farmerdash');

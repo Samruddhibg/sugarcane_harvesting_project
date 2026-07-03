@@ -21,8 +21,8 @@ export const Signup = () => {
       if (data.error) {
         toast.error(data.error);
       } else {
-        toast.success("succes signed in");
-        navigate('/home/auth/login');
+        setAuth(formData.role, data.factoryId, data.userProfile, data.token);
+        toast.success("Signup successful!");
       }
     } catch (err) {
       toast.error(err.message);

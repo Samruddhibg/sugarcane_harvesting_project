@@ -7,7 +7,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_key_v3';
 const redisClient = new IORedis({ ...redisConfig, maxRetriesPerRequest: 3 });
 
 async function jwtAuth(req, res, next) {
-  const token = req.cookies && req.cookies.token;
+  let token = req.cookies && req.cookies.token;
+  if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
   if (!token) {
     return res.status(401).json({ error: 'Access token tracking missing' });
   }
