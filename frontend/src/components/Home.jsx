@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Send, MapPin, Phone, User, Settings, Info } from 'lucide-react';
+import { BACKEND_URL } from '../context/AppContext';
 
 export const Home = () => {
   const [enquiry, setEnquiry] = useState({ name: '', phone: '', district: '', role: 'farmer', msg: '' });
@@ -8,7 +9,7 @@ export const Home = () => {
   const handleEnquirySubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5001/home/feedback", {
+      const res = await fetch(`${BACKEND_URL}/home/feedback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(enquiry)

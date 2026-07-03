@@ -7,7 +7,11 @@ let io;
 
 function init(server) {
   io = new Server(server, {
-    cors: { origin: '*', methods: ['GET', 'POST'] }
+    cors: { 
+      origin: (origin, callback) => callback(null, true), 
+      methods: ['GET', 'POST'],
+      credentials: true
+    }
   });
 
   try {

@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
 
 export const AppContext = createContext();
-const BACKEND_URL = "http://localhost:5001";
+export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5001";
 
 export const AppProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("isAuthenticated") === "true");

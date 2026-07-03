@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { UserPlus } from 'lucide-react';
+import { BACKEND_URL } from '../context/AppContext';
 
 export const Signup = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ export const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5001/home/auth/signup", {
+      const res = await fetch(`${BACKEND_URL}/home/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

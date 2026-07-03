@@ -4,7 +4,9 @@ const redisConfig = require('../queue/connection');
 const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_key_v3';
 
 // Dedicated Redis client for JWT blacklist lookups
-const redisClient = new IORedis({ ...redisConfig, maxRetriesPerRequest: 3 });
+const redisClient = typeof redisConfig === 'string' 
+  ? new IORedis(redisConfig, { maxRetriesPerRequest: 3 })
+  : new IORedis({ ...redisConfig, maxRetriesPerRequest: 3 });
 
 async function jwtAuth(req, res, next) {
   const token = req.cookies && req.cookies.token;

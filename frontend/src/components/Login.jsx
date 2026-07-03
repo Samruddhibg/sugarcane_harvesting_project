@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AppContext } from '../context/AppContext';
 import { LogIn } from 'lucide-react';
+import { BACKEND_URL } from '../context/AppContext';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5001/home/auth/login", {
+      const res = await fetch(`${BACKEND_URL}/home/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
