@@ -60,7 +60,13 @@ router.post('/home/auth/login', async (req, res) => {
   const userProfile = { id: user.id, name: user.name, phone: user.phone, district: user.district, role: user.role, factoryId, factoryIds };
   const token = jwt.sign({ ...userProfile, jti }, JWT_SECRET, { expiresIn: '7d' });
   
-  res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'lax', maxAge: 7 * 24 * 60 * 60 * 1000 });
+  const isProd = process.env.NODE_ENV === 'production';
+  res.cookie('token', token, { 
+    httpOnly: true, 
+    secure: isProd, 
+    sameSite: isProd ? 'none' : 'lax', 
+    maxAge: 7 * 24 * 60 * 60 * 1000 
+  });
   res.json({ success: true, role: user.role, factoryId, factoryIds, userProfile });
 });
 
@@ -89,7 +95,12 @@ router.get('/home/auth/me', jwtAuth, async (req, res) => {
 });
 
 router.post('/home/auth/logout', async (req, res) => {
-  res.clearCookie('token');
+  const isProd = process.env.NODE_ENV === 'production';
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? 'none' : 'lax'
+  });
   res.json({ success: true });
 });
 
