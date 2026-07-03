@@ -1,0 +1,167 @@
+/* ==========================================================================
+   1. GLOBAL SYSTEM RESETS
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #0f172a; /* Deep Slate Blue */
+  color: #000000;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   2. CONTENT LAYOUT CONTAINER
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .lg\:col-span-2 { grid-column: span 2 / span 2; }
+}
+
+/* ==========================================================================
+   3. PANELS, CARDS & TABLES
+   ========================================================================== */
+.bg-slate-950 {
+  background-color: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.bg-slate-900 {
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #1e293b;
+}
+
+th {
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   4. FORMS & UTILITIES
+   ========================================================================== */
+input, select, textarea {
+  width: 100%;
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  color: #000000;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #4f46e5; /* Indigo Blue Focus */
+}
+
+button {
+  cursor: pointer;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: none;
+  transition: background 0.2s ease;
+}
+
+.bg-indigo-600 { background-color: #4f46e5; color: #ffffff; }
+.bg-indigo-600:hover { background-color: #4338ca; }
+
+.bg-rose-600 { background-color: #e11d48; color: #ffffff; }
+.bg-rose-600:hover { background-color: #be123c; }
+
+.bg-emerald-600 { background-color: #059669; color: #ffffff; }
+.bg-emerald-600:hover { background-color: #047857; }
+
+/* ==========================================================================
+   5. STATUS BADGES & TELEMETRY
+   ========================================================================== */
+.rounded-full {
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.bg-emerald-500\/10 { background-color: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+.bg-amber-500\/10 { background-color: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2); }
+
+/* Compact Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   6. NOTIFICATIONS (Toastify)
+   ========================================================================== */
+.Toastify__toast {
+  color: #ffffff !important;
+}
+
+.Toastify__toast-body {
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+  OVERRIDES: Force readable black text across the app
+  ========================================================================== */
+:root { --force-text-color: #000000; }
+
+/* Tailwind-style utility overrides (when project uses utility classes)
+  Convert any `text-white` usages to black so inputs and small components
+  on light backgrounds remain readable for now. */
+.text-white { color: var(--force-text-color) !important; }
+
+/* Force text color for common elements and form controls */
+body, body *:not(svg) { color: var(--force-text-color) !important; }
+input, select, textarea, button, option, label, a, p, span, div, li,
+h1, h2, h3, h4, h5 { color: var(--force-text-color) !important; }
+
+/* Ensure Toastify notifications remain readable (force white for popups) */
+.Toastify__toast, .Toastify__toast-body { color: #ffffff !important; }

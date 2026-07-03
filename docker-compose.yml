@@ -1,0 +1,29 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: sugarcane-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sugarcane-backend
+    ports:
+      - "5001:5000"
+    environment:
+      DATABASE_URL: ${AWS_DATABASE_URL}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: super_secret_key_v3
+      PORT: 5000
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: on-failure
